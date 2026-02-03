@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Wedding</title>
+
+<style>
+/* ===== BASE ===== */
+body{
+  margin:0;
+  min-height:100vh;
+  background-image: url("Couple.jpeg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  font-family: Segoe UI, Tahoma, sans-serif;
+  overflow:hidden;
+  color:#333;
+}
+
+/* Soft white overlay */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,0.25);
+  pointer-events:none;
+}
+
+/* ===== FLOWERS ===== */
+.flower{
+  position:absolute;
+  top:-40px;
+  font-size:24px;
+  animation:fall linear infinite;
+  pointer-events:none;
+  z-index:1;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+  }
+}
+
+/* ===== TAP TO PLAY MUSIC ===== */
+#musicOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(255,255,255,0.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:bold;
+  color:#e63946;
+  cursor:pointer;
+  z-index:9999;
+  text-align:center;
+  padding:20px;
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px){
+  body{
+    background-size: contain;
+    background-position: center top;
+    background-color:#fff;
+  }
+
+  body::after{
+    background:rgba(255,255,255,0.15);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="TUM.mp3" type="audio/mpeg">
+</audio>
+
+<!-- TAP SCREEN TO START MUSIC -->
+<div id="musicOverlay">
+  Tap anywhere to play music 🎵
+</div>
+
+<script>
+/* Flower Animation */
+const flowers=["🌸","🌺","🌼","💐"];
+for(let i=0;i<30;i++){
+  const f=document.createElement("div");
+  f.className="flower";
+  f.innerText=flowers[Math.random()*flowers.length|0];
+  f.style.left=Math.random()*100+"vw";
+  f.style.animationDuration=6+Math.random()*6+"s";
+  f.style.fontSize=18+Math.random()*20+"px";
+  document.body.appendChild(f);
+}
+
+/* Music Play on Tap */
+const audio=document.getElementById("bgMusic");
+const overlay=document.getElementById("musicOverlay");
+
+overlay.addEventListener("click",()=>{
+  audio.play();
+  overlay.style.display="none";
+});
+</script>
+
+</body>
+</html>
